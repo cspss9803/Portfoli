@@ -1,0 +1,75 @@
+.typing-container {
+    
+    --typing1-letters: 34;
+    --typing2-letters: 10;
+    --typing3-letters: 27;
+    --typing4-letters: 26;
+    --typing5-letters: 11;
+    --typing6-letters: 28;
+
+    --typing1-duration: 1.5s;
+    --typing2-duration: 0.5s;
+    --typing3-duration: 0.8s;
+    --typing4-duration: 0.8s;
+    --typing5-duration: 0.5s;
+    --typing6-duration: 1.2s;
+
+    --delay1: 0s;
+    --delay2: calc( var(--typing1-duration) + var(--delay1) + 0.5s );
+    --delay3: calc( var(--typing2-duration) + var(--delay2) + 0.5s );
+    --delay4: calc( var(--typing3-duration) + var(--delay3) + 0s );
+    --delay5: calc( var(--typing4-duration) + var(--delay4) + 0s );
+    --delay6: calc( var(--typing5-duration) + var(--delay5) + 1s );
+
+    --typing1-animation: typing1 var( --typing1-duration ) steps( var(--typing1-letters), end) var( --delay1 ) forwards;
+    --typing2-animation: typing2 var( --typing2-duration ) steps( var(--typing2-letters), end) var( --delay2 ) forwards;
+    --typing3-animation: typing3 var( --typing3-duration ) steps( var(--typing3-letters), end) var( --delay3 ) forwards;
+    --typing4-animation: typing4 var( --typing4-duration ) steps( var(--typing4-letters), end) var( --delay4 ) forwards;
+    --typing5-animation: typing5 var( --typing5-duration ) steps( var(--typing5-letters), end) var( --delay5 ) forwards;
+    --typing6-animation: typing6 var( --typing6-duration ) steps( var(--typing6-letters), end) var( --delay6 ) forwards;
+
+    --typing1-width: calc( var(--typing1-letters) * 1ch );
+    --typing2-width: calc( var(--typing2-letters) * 1ch );
+    --typing3-width: calc( var(--typing3-letters) * 1ch );
+    --typing4-width: calc( var(--typing4-letters) * 1ch );
+    --typing5-width: calc( var(--typing5-letters) * 1ch );
+    --typing6-width: calc( var(--typing6-letters) * 1ch );
+
+    --blink1-animation: blink 0.75s step-end infinite var( --delay1 );
+    --blink2-animation: blink 0.75s step-end infinite var( --delay2 );
+    --blink3-animation: blink 0.75s step-end infinite var( --delay3 );
+    --blink4-animation: blink 0.75s step-end infinite var( --delay4 );
+    --blink5-animation: blink 0.75s step-end infinite var( --delay5 );
+    --blink6-animation: blink 0.75s step-end infinite var( --delay6 );
+
+    --stopBlink1-animation: stopBlink var( --delay2 ) steps(1, end) forwards; 
+    --stopBlink2-animation: stopBlink var( --delay3 ) steps(1, end) forwards; 
+    --stopBlink3-animation: stopBlink var( --delay4 ) steps(1, end) forwards; 
+    --stopBlink4-animation: stopBlink var( --delay5 ) steps(1, end) forwards;
+    --stopBlink5-animation: stopBlink var( --delay6 ) steps(1, end) forwards;
+
+    --typing-color: #ccc;
+    font-size: 1.5em;
+    color: var(  --typing-color );
+}
+
+.typing-container * { font-family: monospace !important; }
+.typing { width: 0; overflow: hidden; white-space: nowrap; border-right: 5px solid; display: inline-block; border-color: transparent; }
+.typing > .symbol { color: #808080; }
+.typing > .tagName { color: #3f9cca; }
+
+.typing-line1 { animation: var( --typing1-animation ), var( --blink1-animation ), var( --stopBlink1-animation ); }
+.typing-line2 { animation: var( --typing2-animation ), var( --blink2-animation ), var( --stopBlink2-animation ); }
+.typing-line3 { animation: var( --typing3-animation ), var( --blink3-animation ), var( --stopBlink3-animation ); }
+.typing-line4 { animation: var( --typing4-animation ), var( --blink4-animation ), var( --stopBlink4-animation ); }
+.typing-line5 { animation: var( --typing5-animation ), var( --blink5-animation ), var( --stopBlink5-animation ); }
+.typing-line6 { animation: var( --typing6-animation ), var( --blink6-animation ); }
+
+@keyframes typing1 { from { width: 0; } to { width: var( --typing1-width ); } }
+@keyframes typing2 { from { width: 0; } to { width: var( --typing2-width ); } }
+@keyframes typing3 { from { width: 0; } to { width: var( --typing3-width ); } }
+@keyframes typing4 { from { width: 0; } to { width: var( --typing4-width ); } }
+@keyframes typing5 { from { width: 0; } to { width: var( --typing5-width ); } }
+@keyframes typing6 { from { width: 0; } to { width: var( --typing6-width ); } }
+@keyframes blink { from, to { border-color: transparent; } 50% { border-color: var( --typing-color ); } }
+@keyframes stopBlink { to { border-color: transparent; } }
