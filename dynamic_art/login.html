@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+<head>
+    <script> // 登入後將無法進入此頁面
+
+        // // 向 /loginCheck_otherPage 這個路由以 POST 的方式發出請求
+        // fetch('/loginCheck', { method: 'POST' })
+
+        // // 首次回傳, 告訴伺服器我需要 json 格式的資料, 如果有問題就會拋出錯誤
+        // .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); } })
+
+        // // 收到指定的資料格式之後, 伺服器就會把相應格式的資料傳過來, 確認有登入就把使用者轉跳到首頁去
+        // .then( data => { if( data.isLogin && data.loginType === 'user' ) { window.location = `${window.location.protocol}//${window.location.host}/`; } })
+        
+        // // 捕捉錯誤, 有錯誤訊息都會在這邊被印出來
+        // .catch( err => { console.log( err );});
+        
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="./img/ico/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style/_global/global.css">
+    <link rel="stylesheet" href="./style/login/login.css">
+    <title>登入</title>
+</head>
+<body>
+
+        <!-- 導覽列 -->
+        <nav class="default_hide">
+            <div class="logo"></div>
+            <ul>
+                <a href="./index.html"><li>首頁</li></a>
+                <a href="./signup.html"><li>註冊</li></a>
+                <a href="./forgot_password.html"><li>忘記密碼</li></a>
+                <a href="./backend.html"><li>後台</li></a>
+            </ul>
+            <button type="button" title="選單開啟/關閉" id="side_menu_toggle_btn">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+        </nav>
+    
+        <!-- 側邊導覽列 -->
+        <aside id="side_menu" style="left: 100vw;">
+            <ul>
+                <a href="./index.html"><li>首頁</li></a>
+                <a href="./signup.html"><li>註冊</li></a>
+                <a href="./forgot_password.html"><li>忘記密碼</li></a>
+                <a href="./backend.html"><li>後台</li></a>
+            </ul>
+        </aside>
+
+        <header>
+            <canvas id="DynamicGeomBg" width="1920" height="1080"></canvas>
+            <h1>Dynamic Art</h1>
+            <a href="./index.html" class="jump_page_btn"><button>前往首頁!</button></a>
+            <div class="copyright">
+                <small>
+                    Copyright © 2024 DynamicArt. All rights reserved.
+                </small>
+            </div>
+        </header>
+    
+        <!-- 主要內容 -->
+        <main  class="form_main">
+
+            <section class="form_section">
+
+                <div class="mountain_bg"></div>
+                
+                <form id="form">
+
+                    <h2>登入</h2>
+
+                    <div class="form_mes">
+                        <span>新用戶嗎? <a href="./signup.html">創建帳號</a></span>
+                    </div>
+
+                    <div class="input_warp">
+                        <input type="text" name="account" id="account" autocomplete="off" maxlength="50" required>
+                        <label for="account">帳號</label>
+                        <div class="input_mes" style="display: none;">帳號不存在</div>
+                    </div>
+
+                    <div class="input_warp">
+                        <input type="password" name="password" id="password" autocomplete="off" maxlength="64" required>
+                        <label for="password">密碼</label>
+                        <div class="input_mes" style="display: none;">密碼不正確</div>
+                    </div>
+
+                    <button type="submit" title="登入">登入</button>
+
+                </form>
+
+            </section>
+
+        </main>
+
+</body>
+
+<script> // 登入處理
+
+// 抓取表單元件
+const form = document.getElementById('form');
+
+// 監聽表單送出事件
+form.addEventListener('submit', function(event) {
+
+    // 阻止表單送出
+    event.preventDefault(); 
+
+    // 抓取全部的 input 提示元件
+    const all_input_mes = document.querySelectorAll( '.input_mes' );
+
+    // 隱藏全部的 input 提示元件
+    all_input_mes.forEach( element => element.style.display = 'none' );
+    
+    // 使用表單元件生成 FormData 物件
+    const formData = new FormData(form);
+
+    formData.append( 'loginType', 'user' );
+    
+    // // 向 /login 這個路由以 POST 的方式將表單資料傳送過去
+    // fetch('/login', { method: 'POST', body: formData, })
+    
+    // // 首次回傳, 告訴伺服器我需要 json 格式的資料, 如果有問題就會拋出錯誤
+    // .then( res => { if ( res.ok ) { return res.json(); } else {  throw new Error('請求失敗'); } })
+    
+    // // 收到指定的資料格式之後, 伺服器就會把相應格式的資料傳過來
+    // .then( loginResponse => {
+
+    //     // 登入成功
+    //     if( loginResponse.result === 'success' && loginResponse.loginType === 'user' ) {
+
+    //         // 隱藏表單
+    //         form.style.display = 'none';
+
+    //         // 抓取標題字
+    //         const titleElement = document.querySelector('header > h1');
+
+    //         // 把標題字內容替換掉
+    //         titleElement.textContent = '登入成功';
+
+    //         // 新增 class 把標題字移到畫面中間
+    //         titleElement.classList.add('success');
+
+    //         // 抓取轉跳按鈕
+    //         const jumpPageBtn = document.querySelector('.jump_page_btn');
+
+    //         // 顯示轉跳按鈕
+    //         jumpPageBtn.style.display = 'flex';
+
+    //         // 將導覽列移除
+    //         document.querySelector('nav').remove();
+
+    //     } 
+        
+    //     // 登入失敗, 帳號不存在 或 密碼不正確
+    //     else if ( loginResponse.result === 'fail' ) {
+
+    //         // 顯示錯誤訊息( debug用的, 可以刪掉 )
+    //         console.log( loginResponse.mes );
+
+    //         // 利用回傳資料中指定的名稱, 抓取 input 提示元件
+    //         const errorElement = document.querySelector(`#${loginResponse.errorTarget} ~ .input_mes`);
+
+    //         // 將回傳資料中指定的 input 提示元件顯示出來
+    //         errorElement.style.display = 'block';
+
+    //         // 將回傳資料中指定的 input 提示元件中的文字替換成 回傳資料中指定的文字訊息
+    //         errorElement.textContent = loginResponse.errorMessage || errorElement.textContent;
+
+    //     }
+    // })
+
+    // // 捕捉錯誤, 有錯誤訊息都會在這邊被印出來
+    // .catch( err => { console.error( err ); });
+});
+
+</script>
+
+<script src="./js/sideMenu.js"></script>
+<script src="./js/inputFocus.js"></script>
+<script src="./js/touchmoveSetting.js"></script>
+<script src="./js/DynamicGeomBg.js"></script>
+<script> // 動態背景
+
+    const dynamicGeomBg_option = { 
+
+        canvasID: 'DynamicGeomBg',
+
+        amount: document.documentElement.clientWidth / 200,
+
+        speed: 1,
+
+        bgColor: '#ff0',
+
+        circle: {
+            enable: true,
+            color: '#3333cc',
+            base_size: 40,
+            size_range: 120,
+        },
+
+        rect:     { enable: false },
+        triangle: { enable: false },
+
+    }
+
+    const dynamicGeomBg = new DynamicGeomBg( dynamicGeomBg_option ).play();
+
+</script>
+</html>

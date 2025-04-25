@@ -1,0 +1,123 @@
+footer {
+    background-color: #333;
+    padding-top: 5rem;
+
+    .copyright { 
+        background-color: #000; 
+    }
+
+    .info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-bottom: 5rem;
+        &>div{
+            padding: 3rem 1.5rem;
+            width: 90%;
+            max-width: 450px;
+            h3 {
+                text-align: center;
+                color: #fff;
+            }
+
+            &.related_info {
+                table {
+                    left: 50%;
+                    transform: translateX(-40%);
+                    margin: 0;
+                    tr {
+                        th, td {
+                            
+                            padding: 1rem 0;
+                            color: #fff;
+                        }
+                        th{
+                            width: 85px;
+                        }
+                        td {
+                            width: 180px;
+                        }
+                    }
+                }
+            }
+
+            &.related_link {
+                &>div{
+                    p {
+                        text-align: center;
+                        a{
+                            margin: 0 5px;
+                            color: #ccc;
+                            line-height: 3rem;
+                            white-space: nowrap;
+                            transition: color .4s;
+                            &::before {
+                                content: '';
+                                width: 0;
+                                bottom: 0;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                height: 1px;
+                                background-color: #fff;
+                                transition: width .4s;
+                            }
+                            &:hover{ 
+                                color: #fff; 
+                                &::before { width: 100%; }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+            &.social_media {
+                &>div{
+                    width: 300px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    a{
+                        display: block;
+                        width: 45px;
+                        aspect-ratio: 1 / 1;
+                        margin: 1rem;
+                        &:nth-child(1){
+                            background: url('../../img/footer_discord.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                        &:nth-child(2){
+                            background: url('../../img/footer_instagram.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                        &:nth-child(3){
+                            background: url('../../img/footer_facebook.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                        &:nth-child(4){
+                            background: url('../../img/footer_line.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                        &:nth-child(5){
+                            background: url('../../img/footer_twitter.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                        &:nth-child(6){
+                            background: url('../../img/footer_youtube.svg') no-repeat;
+                            background-size: 100%;
+                            background-position: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

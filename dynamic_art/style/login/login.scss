@@ -1,0 +1,24 @@
+
+@import '../form';
+
+header {
+
+    h1 {
+        left: 5vw;
+        top: max(20vh, 20vw);
+        transform: translate(0, -50%);
+    }
+
+}
+
+main{
+    &.form_main {
+        section {
+            &.form_section {
+                form {
+                    right: 10vw;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="./img/ico/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style/_global/global.css">
+    <link rel="stylesheet" href="./style/404/page404.css">
+    <title>404-找不到頁面</title>
+</head>
+<body>    
+
+    <header>
+        <canvas id="DynamicGeomBg" width="1920" height="1080"></canvas>
+        <h1 class="title_404">404<wbr> No Found</h1>
+        <a href="./index.html" class="jump_page_btn" style="top: 70%;"><button>回到首頁</button></a>
+    </header>
+
+</body>
+
+<script src="./js/touchmoveSetting.js"></script>
+<script src="./js/DynamicGeomBg.js"></script>
+<script> // 動態背景
+    const dynamicGeomBg_option = { 
+
+        canvasID: 'DynamicGeomBg',
+
+        amount: document.documentElement.clientWidth / 200,
+
+        speed: 1,
+
+        bgColor: 'rgb(0, 102, 255)',
+
+        circle: {
+            enable: true,
+            color: 'rgb(0, 0, 0)',
+            base_size: 40,
+            size_range: 120,
+        },
+
+        rect:     { enable: false },
+        triangle: { enable: false },
+
+    }
+
+    const dynamicGeomBg = new DynamicGeomBg( dynamicGeomBg_option ).play();
+
+</script>
+
+</html>

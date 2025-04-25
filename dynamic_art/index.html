@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="./img/ico/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style/_global/global.css">
+    <link rel="stylesheet" href="./style/index/index.css">
+    <title>首頁</title>
+</head>
+<body>
+
+<div class="container">
+
+        <!-- 導覽列 -->
+        <nav>
+            <div class="logo"></div>
+            <ul>
+                <a href="./login.html" class="login_btn"><li>登入</li></a>
+                <a href="./signup.html" class="signup_btn"><li>註冊</li></a>
+                <a href="./forgot_password.html" class="forgot_password_btn"><li>忘記密碼</li></a>
+                <a href="./backend.html" class="backend_btn"><li>後台</li></a>
+            </ul>
+            <button type="button" title="選單開啟/關閉" id="side_menu_toggle_btn">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+        </nav>
+    
+        <!-- 頁首 -->
+        <header>
+            <canvas id="DynamicGeomBg" width="1920" height="1080"></canvas>
+            <h1>Dynamic Art</h1>
+            <div class="bannerPlayControllor">
+                <button title="播放" type="button" id="DynamicGeomBg_play" style="display: none;"></button>
+                <button title="停止" type="button" id="DynamicGeomBg_stop" style="display: block;" ></button>
+            </div>
+        </header>
+    
+        <!-- 側邊導覽列 -->
+        <aside id="side_menu" style="left: 100vw;">
+            <ul>
+                <a href="./login.html" class="login_btn"><li>登入</li></a>
+                <a href="./signup.html" class="signup_btn"><li>註冊</li></a>
+                <a href="./forgot_password.html" class="forgot_password_btn"><li>忘記密碼</li></a>
+                <a href="./backend.html" class="backend_btn"><li>後台</li></a>
+            </ul>
+        </aside>
+    
+        <!-- 主要內容 -->
+        <main>
+
+            <section id="about_tools">
+                <h2>使用工具</h2>
+                <div class="wrap">
+                    <div class="icon_list">
+                        <div title="Node.js"></div>
+                        <div title="MySQL"></div>
+                        <div title="SASS"></div>
+                        <div title="HTML"></div>
+                        <div title="JavaScript"></div>
+                        <div title="CSS"></div>
+                    </div>
+                    <article>
+                        <h3>使用工具介紹</h3>
+                        <p>
+                            在這個網站中，使用了 Node.js 作為伺服器，網頁架構由 HTML 搭建，
+                            所有的樣式與大部分的視覺效果來自 SASS 所編譯而成的 CSS 來達成，
+                            資料庫採用 MySQL 資料庫，而大部分的元件互動、部分視覺效果、
+                            與伺服器溝通以及與資料庫互動，都是由 JavaScript 來完成。
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="about_banner">
+                <h2>動態橫幅</h2>
+                <div class="wrap">
+                    <article>
+                        <h3>動態橫幅介紹</h3>
+                        <p>
+                            動態橫幅使用 JavaScript 在 HTML 的 &lt;canvas&gt; 中繪製，
+                            我撰寫了 2 個 JavaScript 類別，一個用來生產畫布中的各種形狀，
+                            另一個則是負責畫布的設定與形狀移動的部分，最後使用 css 中的濾鏡，
+                            提高模糊與對比的程度，就能做到沾黏與融合的效果。
+                        </p>
+                    </article>
+                    <div class="icon_list">
+                        <div title="JavaScript"></div>
+                        <div title="HTML"></div>
+                        <div title="CSS"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="message_board">
+                <h2>留言板</h2>
+                <div>
+                    <div class="message_list">
+
+                        <form id="user_mes_form" class="message_item">
+                            <div class="user_head"></div>
+                            <div class="user_mes_warp">
+                                <p><span class="loginer_name">請登入</span></p>
+                                <div class="user_mes disable" id="user_mes_div" contenteditable="false"></div>
+                                <textarea name="user_mes" required id="user_mes_textarea" hidden> </textarea>
+                                <button id="submit_mes_btn" type="submit" title="送出" style="display: none;"></button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="reset_password" class="form_section" style="display: none;">
+                <div id="reset_password_form_bg"></div>
+                <form id="reset_password_form">
+
+                        <h2>重設密碼</h2>
+    
+                        <div class="form_mes"></div>
+    
+                        <div class="input_warp">
+                            <input type="password" name="old_password" id="old_password" autocomplete="off" required>
+                            <label for="old_password">舊密碼</label>
+                            <div class="input_mes" style="display: none;">密碼不正確</div>
+                        </div>
+    
+                        <div class="input_warp">
+                            <input type="password" name="new_password" id="new_password" autocomplete="off" required>
+                            <label for="new_password">新密碼</label>
+                            <div class="input_mes" style="display: none;">密碼不能跟舊密碼相同</div>
+                        </div>
+
+                        <div class="input_warp">
+                            <input type="password" name="check_new_password" id="check_new_password" autocomplete="off" required>
+                            <label for="check_new_password">確認密碼</label>
+                            <div class="input_mes" style="display: none;">確認密碼不正確</div>
+                        </div>
+    
+                        <button type="submit" title="登入">送出</button>
+    
+                </form>
+            </section>
+
+            <section id="edit_account" class="form_section" style="display: none;">
+                <div id="edit_account_form_bg"></div>
+                <form id="edit_account_form">
+
+                        <h2>編輯帳號資料</h2>
+    
+                        <div class="form_mes"></div>
+    
+                        <div class="input_warp">
+                            <input type="text" name="name" id="name" autocomplete="off" maxlength="12" required>
+                            <label for="name">姓名</label>
+                        </div>
+    
+                        <div class="input_warp">
+                            <input type="tel" name="tel" id="tel" pattern="[0-9]+" autocomplete="off" maxlength="20" required>
+                            <label for="tel">電話</label>
+                            <div class="input_mes" style="display: none;">此電話已經被註冊</div>
+                        </div>
+    
+                        <button type="submit" title="登入">送出</button>
+    
+                </form>
+            </section>
+
+        </main>
+    
+        <!-- 頁尾 -->
+        <footer>
+            <div class="info">
+                <div class="related_info">
+                    <h3>相關資訊</h3>
+                    <table>
+                        <tr>
+                            <th>相關單位: </th>
+                            <td> 資訊部門</td>
+                        </tr>
+                        <tr>
+                            <th>聯絡電話: </th>
+                            <td> 0921000000</td>
+                        </tr>
+                        <tr>
+                            <th>通訊地址: </th>
+                            <td> 台中市霧峰區</td>
+                        </tr>
+                        <tr>
+                            <th>電子信箱: </th>
+                            <td> dynamicart@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <th>聯絡人名: </th>
+                            <td> 董先生</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="related_link">
+                    <h3>相關連結</h3>
+                    <div>
+                        <p><a href="">HTML5 網頁結構</a></p>
+                        <p><a href="">SASS 樣式預處理器</a></p>
+                        <p><a href="">CSS3 網頁樣式定義</a></p>
+                        <p><a href="">JavaScript 網頁元件操作</a></p>
+                        <p><a href="">Node.js 網頁伺服器</a></p>
+                        <p><a href="">MySQL 關聯式資料庫</a></p>
+                    </div>
+                </div>
+                <div class="social_media">
+                    <h3>社群媒體</h3>
+                    <div>
+                        <a href="" title="discord"></a>
+                        <a href="" title="instagram"></a>
+                        <a href="" title="facebook"></a>
+                        <a href="" title="line"></a>
+                        <a href="" title="twitter"></a>
+                        <a href="" title="youtube"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <small>
+                    Copyright © 2024 DynamicArt. All rights reserved.
+                </small>
+            </div>
+        </footer>
+
+</div>
+
+</body>
+
+<script>// 留言載入處理
+
+    // fetch('/loginCheck', { method: 'POST' })
+
+    // .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); }})
+
+    // .then( loginCheckRespond => {
+
+    //     if( loginCheckRespond.isLogin && loginCheckRespond.loginType === 'user' ) { 
+
+    //         document.querySelectorAll('.login_btn').forEach( elm => { 
+
+    //             elm.href = '/logout'; 
+    //             elm.querySelector('li').textContent = '登出'; 
+
+    //         });
+
+    //         document.querySelectorAll('.signup_btn').forEach( elm => { 
+
+    //             elm.href = '/delete_account'; 
+    //             elm.querySelector('li').textContent = '刪除帳號'; 
+    //             elm.classList.add('delete_account_btn'); 
+
+    //         });
+
+    //         document.querySelectorAll('.forgot_password_btn').forEach( 
+
+    //             elm => { elm.href = '/reset_password'; 
+    //             elm.querySelector('li').textContent = '重設密碼'; 
+    //             elm.classList.add('reset_password_btn'); 
+
+    //         });
+
+    //         document.querySelectorAll('.backend_btn').forEach( elm => { 
+
+    //             elm.href = '/edit_account'; 
+    //             elm.querySelector('li').textContent = '編輯帳號資料'; 
+    //             elm.classList.add('edit_account_btn'); 
+
+    //         });
+
+    //         document.querySelector('.loginer_name').textContent = loginCheckRespond.name;
+
+    //         document.querySelector('#submit_mes_btn').style.display = 'block';
+
+    //         document.querySelector('#user_mes_div').classList.remove('disable');
+
+    //         document.querySelector('#user_mes_div').setAttribute('contenteditable', 'true');
+
+    //     }
+
+    //     fetch('/load_mes_board', { method: 'POST' })
+
+    //     .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); } } )
+        
+    //     .then( mesData => {
+
+    //         let mes_board_HTML = '';
+
+    //         if( mesData.length > 0 ) {
+
+    //             for( const mes of mesData ) {
+
+    //                 const { id, name, user_id, mes_content } = mes;
+
+    //                 const deleteBtn = loginCheckRespond.isLogin && loginCheckRespond.loginType === 'user' && user_id === loginCheckRespond.id ? `<a href="/deleteMes?delete_id=${id}" class="delete_btn"></a>` : '';
+
+    //                 mes_board_HTML += `
+
+    //                     <div class="message_item">
+    //                         ${ deleteBtn }
+    //                         <div class="user_head"></div>
+    //                         <div class="user_mes_warp">
+    //                             <p><span>${ name }</span></p>
+    //                             <div class="user_mes">${ mes_content }</div>
+    //                         </div>
+    //                     </div>
+
+    //                 `;
+
+    //             }
+
+    //             document.querySelector('.message_list').innerHTML += mes_board_HTML;
+
+    //         }
+
+    //         init();
+
+    //     })
+
+    //     .catch( err => { console.log( err ); });
+
+    // })
+
+    // .catch( err => { console.log( err ); });
+    
+</script>
+
+<script src="./js/inputFocus.js"></script>
+<script src="./js/sideMenu.js"></script>
+<script src="./js/DynamicGeomBg.js"></script>
+<script> // 動態背景
+
+const dynamicGeomBg_option = { 
+
+    canvasID: 'DynamicGeomBg',
+
+    amount: document.documentElement.clientWidth / 150,
+
+    speed: document.documentElement.clientWidth > 700 ? 2.5 : 1,
+
+    bgColor: '#ffffff',
+
+    triangle: {
+        enable: true,
+        color: '#fc88df',
+        base_size: 40,
+        size_range: 100,
+
+    },
+
+    circle: {
+        enable: true,
+        color: '#000000',
+        base_size: 40,
+        size_range: 100,
+    },
+
+    rect: {
+        enable: true,
+        color: '#fff2a6',
+        base_size: 40,
+        size_range: 100,
+    },
+
+}
+
+const playBtn = document.querySelector('#DynamicGeomBg_play');
+const stopBtn = document.querySelector('#DynamicGeomBg_stop');
+
+playBtn.addEventListener('click', () => {
+    dynamicGeomBg.play();
+    playBtn.style.display = 'none';
+    stopBtn.style.display = 'block';
+});
+
+stopBtn.addEventListener('click', () => {
+    dynamicGeomBg.stop();
+    playBtn.style.display = 'block';
+    stopBtn.style.display = 'none';
+});
+
+const dynamicGeomBg = new DynamicGeomBg( dynamicGeomBg_option );
+
+dynamicGeomBg.play();
+
+</script>
+<script> // 留言送出、刪除
+
+// function init() {
+
+//     document.querySelector('#user_mes_form').addEventListener('submit', function( event ){
+
+//         event.preventDefault();
+
+//         fetch('/loginCheck', { method: 'POST' })
+
+//         .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); }})
+
+//         .then( loginCheckRespond => { 
+
+//             if ( loginCheckRespond.isLogin && loginCheckRespond.loginType === 'user' ) {
+
+//                 const textarea = document.querySelector('#user_mes_textarea');
+        
+//                 const user_mes_div = document.querySelector('#user_mes_div');
+                
+//                 textarea.value = user_mes_div.textContent;
+
+//                 const content = textarea.value.trim();
+
+//                 const pattern = /^(?!\s+$).+/;
+
+//                 if ( (pattern.test(content)) ) { 
+
+//                     user_mes_div.textContent = '';
+                    
+//                     const formData = new FormData(document.querySelector('#user_mes_form'));
+
+//                     formData.append('mes_owner_name', loginCheckRespond.name);
+                
+//                     fetch('/sendMes', { method: 'POST', body: formData, })
+
+//                     .then( res => { if (res.ok) { return res.json(); } else { throw new Error('請求失敗'); } })
+
+//                     .then( sendMesRespond => {
+
+//                         if( sendMesRespond.err === "no_login" ){ console.log( '留言失敗, 您尚未登入' ); } 
+                        
+//                         else if ( sendMesRespond.err === "post_data_undefined" ) { console.log( '留言失敗, 留言資料為 undefined' ); }
+                        
+//                         else {
+
+//                             textarea.value = '';
+
+//                             const { id, name, mes_content, user_id  } = sendMesRespond;
+
+//                             const deleteBtn = loginCheckRespond.isLogin  && loginCheckRespond.loginType === 'user' && user_id === loginCheckRespond.id ? `<a href="/deleteMes?delete_id=${ id }" class="delete_btn"></a>` : '';
+
+//                             document.querySelector('.message_list').innerHTML += `
+//                                 <div class="message_item">
+//                                     ${ deleteBtn }
+//                                     <div class="user_head"></div>
+//                                     <div class="user_mes_warp">
+//                                         <p><span>${ name }</span></p>
+//                                         <div class="user_mes">${ mes_content }</div>
+//                                     </div>
+//                                 </div>
+//                             `;
+
+//                             init();
+//                         }
+                        
+//                     })
+
+//                     .catch( err => { console.error( err ); });
+
+//                 }
+
+//             }
+
+//         })
+
+//         .catch( err => { console.error( err ); });
+
+//     });
+
+//     document.querySelectorAll('.delete_btn').forEach( delete_btn => {
+
+//         const href = delete_btn.getAttribute('href');
+
+//         delete_btn.addEventListener('click', event => {
+
+//             event.preventDefault();
+
+//             const formData = new FormData();
+
+//             formData.append( 'delete_id', href.split('delete_id=')[1] );
+
+//             fetch( '/deleteSelfMes', { method: 'POST', body: formData, })
+            
+//             .then( res => { if (res.ok) { return res.json(); } else { throw new Error('請求失敗'); } })
+            
+//             .then( deleteMesRespond => {
+
+//                 const { isDelete } = deleteMesRespond;
+
+//                 if( isDelete ) { event.target.parentNode.remove(); } 
+                
+//                 else { window.location.reload(); }
+                
+//             })
+
+//             .catch( err => { console.error( err ); });
+
+//         });
+
+//     })
+
+//     fetch('/loginCheck', { method: 'POST' })
+
+//     .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('loginCheck 請求失敗'); }})
+
+//     .then( loginCheckRespond => {
+
+//         if( loginCheckRespond.isLogin && loginCheckRespond.loginType === 'user' ) { 
+
+//             document.querySelectorAll('.delete_account_btn').forEach( element => {
+
+//                 element.addEventListener('click', event => {
+
+//                     event.preventDefault();
+
+//                     const formData = new FormData();
+
+//                     formData.append( 'id', loginCheckRespond.id );
+
+//                     formData.append( 'accountTpye', 'user' );
+
+//                     fetch('/delete_account', { method: 'POST', body: formData })
+
+//                     .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗000'); } } )
+
+//                     .then( deleteAccountRespond => {
+
+//                         if( deleteAccountRespond.isAccountDeleted ) { window.location.reload(); }
+
+//                         else { alert('帳號刪除失敗'); }
+//                     })
+
+//                     .catch( err => { console.log( err ); });
+
+//                 });
+
+//             });
+
+//             document.querySelectorAll('.reset_password_btn').forEach( element => {
+
+//                 element.addEventListener('click', event => {
+
+//                     event.preventDefault();
+
+//                     document.querySelector('#reset_password').style.display = 'block';
+
+//                     document.querySelector('#reset_password_form_bg').addEventListener('click', event => {
+
+//                         document.querySelector('#reset_password').style.display = 'none';
+
+//                     });
+
+//                     const form = document.querySelector('#reset_password_form');
+
+//                     form.addEventListener('submit', event => { 
+
+//                         event.preventDefault();
+
+//                         document.querySelectorAll('.input_mes').forEach( element => element.style.display = 'none' );
+
+//                         const new_password = document.querySelector('#new_password').value;
+
+//                         const check_new_password = document.querySelector('#check_new_password').value;
+
+//                         if( new_password === check_new_password ) {
+
+//                             const formData = new FormData( form );
+
+//                             formData.append( 'id', loginCheckRespond.id );
+
+//                             formData.append( 'accountTpye', 'user' );
+
+//                             fetch('/reset_password', { method: 'POST', body: formData })
+
+//                             .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); } } )
+
+//                             .then( resetPasswordRespond => {
+
+//                                 if( resetPasswordRespond.err === 'no_login' ) {
+
+//                                     alert(' 您尚未登入 ');
+//                                     window.location.reload();
+
+//                                 } 
+                                
+//                                 else if( resetPasswordRespond.err === 'wrong_passowrd') {
+
+//                                     document.querySelector('#old_password ~ .input_mes').style.display = 'block';
+
+//                                 } 
+
+//                                 else if( resetPasswordRespond.err === 'same_passowrd') {
+
+//                                     document.querySelector('#new_password ~ .input_mes').style.display = 'block';
+
+//                                 } 
+                                
+//                                 else if( resetPasswordRespond.isPasswordUpdate ){
+
+//                                     window.location = `${window.location.protocol}//${window.location.host}/login`;
+
+//                                 } else {
+
+//                                     console.error( '發生不明錯誤: ', resetPasswordRespond );
+
+//                                 }
+
+//                             })
+
+//                             .catch( err => { console.log( err ); });
+
+//                         } else {
+
+//                             document.querySelector('#check_new_password ~ .input_mes').style.display = 'block';
+
+//                         }
+
+//                     });
+
+//                 });
+
+//             })
+
+//             document.querySelectorAll('.edit_account_btn').forEach( element => {
+
+//                 element.addEventListener('click', event => {
+
+//                     event.preventDefault();
+
+//                     document.querySelector('#name').value = loginCheckRespond.name;
+
+//                     document.querySelector('#tel').value = loginCheckRespond.tel;
+
+//                     document.querySelector('#edit_account').style.display = 'block';
+
+//                     document.querySelector('#edit_account_form_bg').addEventListener( 'click', event => {
+
+//                         document.querySelector('#edit_account').style.display = 'none';
+
+//                     });
+
+//                     const form = document.querySelector('#edit_account_form');
+
+//                     form.addEventListener('submit', event => {
+
+//                         event.preventDefault();
+
+//                         document.querySelectorAll('.input_mes').forEach( element => element.style.display = 'none' );
+
+//                         const formData = new FormData( form );
+
+//                         formData.append( 'id', loginCheckRespond.id );
+
+//                         fetch('/edit_self_account', { method: 'POST', body: formData })
+
+//                         .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); } } )
+
+//                         .then( editAccountRespond => {
+
+//                             if ( editAccountRespond.err === 'tel_has_used' ) {
+
+//                                 document.querySelector('#tel ~ .input_mes').style.display = 'block';
+
+//                             }
+
+//                             else if ( editAccountRespond.err === 'no_login' ) {
+
+//                                 alert('您以登出, 請重新登入!');
+
+//                                 window.location.reload();
+
+//                             }
+
+//                             else if ( editAccountRespond.isUpdated ) {
+
+//                                 alert('資料修改成功!');
+
+//                                 window.location.reload();
+
+//                             } else {
+
+//                                 console.log(editAccountRespond)
+//                                 alert('資料修改失敗!');
+
+//                             }
+
+//                         })
+
+//                         .catch( err => { console.log( err ); });
+
+//                     });
+
+
+//                 });
+
+//             })
+//         }
+        
+//     })
+
+//     .catch( err => { console.log( err ); });
+
+// }
+
+</script>
+</html>

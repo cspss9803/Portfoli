@@ -1,0 +1,23 @@
+header {
+
+    h1 {
+        left: 50vw;
+        top: 40vh;
+        transform: translate(-50%, -50%);
+        &::before { content: '找不到此頁面!'; }
+    }
+
+    .jump_page_btn {
+        display: flex; 
+        left: 50vw
+    }
+
+}
+
+@media screen and ( max-width: 700px ) {
+    header {
+        h1 {
+            &::before{ bottom: 0; }
+        }
+    }
+}

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/ico/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style/backend/backend.css">
+    <title>後台</title>
+</head>
+<body>
+    <div id="contenter">
+        <nav>
+            <h3>Dynamic Art</h3>
+            <div id="admin_info">
+                <span>管理者</span>
+            </div>
+            <ul id="manage_menu"></ul>
+            <a id="lognout_btn" href="./index.html">登出</a>
+        </nav>
+        <main>
+            <section id="manage_section">
+                <h2>歡迎使用本系統</h2>
+                <p class="manage_section_mes"></p>
+                <div class="item_warp"></div>
+            </section>
+        </main>
+
+        <footer>
+            <small>Copyright © 2024 DynamicArt. All rights reserved.</small>
+        </footer>
+
+    </div>
+</body>
+<script>
+
+// fetch( '/backendMenuLoad', { method: 'POST' } )
+
+// .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗'); } } )
+
+// .then( resData => {
+
+//     const level = resData.adminLevelData;
+
+//     let manage_menu_item_HTML = '';
+
+//     const manage_menu_item_list = [
+//         '<li id="mes_manage">留言版</li>',
+//         '<li id="user_manage">使用者</li>',
+//         '<li id="admin_manage">管理者</li>',
+//     ]
+
+//     for( let i = 0; i <= level; i++ ) {
+
+//         manage_menu_item_HTML += manage_menu_item_list[i];
+
+//     }
+
+//     document.querySelector('#manage_menu').innerHTML = manage_menu_item_HTML;
+
+//     init();
+
+// })
+
+// .catch( err => { console.log( err ); });
+   
+function init() {
+
+    if( document.querySelectorAll('#manage_menu > li').length > 0 ) {
+
+            document.querySelectorAll('#manage_menu > li').forEach( manage_item => {
+
+            manage_item.addEventListener('click', event => {
+
+                const viewTarget = manage_item.getAttribute('id').split('_')[0];
+
+                const titles = { 'user': '使用者', 'mes': '留言', 'admin': '管理者' }
+
+                document.querySelector('#manage_section > h2').textContent = `${titles[viewTarget]}管理`;
+
+                if( document.querySelectorAll('#manage_section > .item_warp > .item').length > 0 ) {
+
+                    document.querySelectorAll('#manage_section > .item_warp > .item').forEach( element => element.remove() );
+
+                }
+                
+                document.querySelector('.manage_section_mes').textContent = '載入中...';
+
+                setTimeout( () => loadData( viewTarget ), 1);
+
+            });
+
+        });
+
+    }
+
+    if( document.querySelectorAll('.switch').length > 0 ) {
+
+        document.querySelectorAll('.switch').forEach( element => {
+
+            element.addEventListener( 'click', event => {
+
+                const item = element.parentNode.parentNode;
+
+                const switchStatusID = item.querySelector('.id').textContent;
+
+                const switchTarget = item.querySelector('.delete').getAttribute('delete_target');
+
+                const formData = new FormData();
+
+                formData.append('switchStatusID', switchStatusID);
+
+                formData.append('switchTarget', switchTarget);
+
+                fetch( '/manage_switch_status', { method: 'POST', body: formData } )
+
+                .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗000'); } } )
+
+                .then( responseData => { 
+
+                    if( responseData.isUpdated ) {
+
+                        item.classList.toggle('disable_item');
+
+                        setTimeout(() => loadData( switchTarget ), 400)
+
+                    }
+
+                })
+
+                .catch( err => { console.log( err ); });
+
+            });
+
+        });   
+
+    }
+
+    if( document.querySelectorAll('.delete').length > 0 ){ 
+
+        document.querySelectorAll('.delete').forEach( deleteBtnElement => {
+
+            deleteBtnElement.addEventListener( 'click', event => {
+
+                const deleteTarget = deleteBtnElement.getAttribute('delete_target');
+
+                const deleteID = deleteBtnElement.getAttribute('delete_id');
+
+                const formData = new FormData();
+
+                formData.append('deleteTarget', deleteTarget);
+
+                formData.append('deleteID', deleteID);
+
+                fetch( '/manage_delete', { method: 'POST', body: formData } )
+
+                .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗000'); } } )
+
+                .then( responseData => { 
+
+                    if ( responseData.err !== 'data_of_parameter_is_not_exist' ) {
+
+                        if( responseData.isDeleted ) {
+
+                            loadData( deleteTarget )
+
+                        }
+
+                        else { alert('刪除失敗'); }
+
+                    }
+
+                })
+
+                .catch( err => { console.log( err ); });
+
+            });
+
+        });
+
+    }
+
+    if( document.querySelector('#addItem') ) {
+
+        document.querySelector('.hideInput').addEventListener('click', event => {
+
+            document.querySelector('.hideInput').classList.remove('hideInput');
+
+        }, false);
+
+        document.querySelector('#cancelAddAdmin').addEventListener('click', event => {
+
+            setTimeout( () =>  document.querySelector('#addItem').classList.add('hideInput'), 1);
+
+        }, false);
+
+        const addAdminForm = document.querySelector('#addItem');
+
+        addAdminForm.addEventListener('submit', event => {
+
+            event.preventDefault();
+
+            document.querySelector('.addItemMes').style.display = 'none';
+
+            const formData = new FormData( addAdminForm );
+
+            fetch( '/manage_add_admin', { method: 'POST', body: formData } )
+
+            .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗000'); } } )
+
+            .then( responseData => { 
+
+                if ( responseData.err === 'account_exist' ) {
+
+                    document.querySelector('.addItemMes').style.display = 'block';
+
+                    document.querySelector('.addItemMes').textContent = '帳號已被使用';
+
+                }
+
+                else if ( responseData.err === 'tel_exist' ) {
+
+                    document.querySelector('.addItemMes').style.display = 'block';
+
+                    document.querySelector('.addItemMes').textContent = '電話已被使用';
+
+                }
+
+                else if ( responseData.err === 'level_out_of_range' ) {
+
+                    document.querySelector('.addItemMes').style.display = 'block';
+
+                    document.querySelector('.addItemMes').textContent = '權限超出範圍';
+
+                }
+
+                else {
+
+                    if( responseData.isInsered ) { loadData( 'admin' ) }
+
+                    else { alert('刪除失敗'); }
+
+                }
+
+            })
+
+            .catch( err => { console.log( err ); });
+
+
+        });
+    }
+
+    if( document.querySelector('.addItemMes') ) {
+
+        document.querySelector('.addItemMes').addEventListener('click', event => {
+
+            document.querySelector('.addItemMes').style.display = 'none';
+
+        });
+
+    }
+
+}
+
+function loadData( viewTarget ) {
+
+    const formData = new FormData();
+
+    formData.append( 'view', viewTarget );
+
+    // fetch( '/view', { method: 'POST', body: formData } )
+
+    // .then( res => { if ( res.ok ) { return res.json(); } else { throw new Error('請求失敗000'); } } )
+
+    // .then( responseData => {
+
+    //     if ( responseData.err !== 'data_of_parameter_is_not_exist' ) {
+
+    //         if ( responseData.isGetData ) {
+
+    //             let dataHTML = '';
+
+    //             const resData = responseData.data;
+
+    //             if( viewTarget === 'user' || viewTarget === 'admin' ) {
+
+    //                 let currentTopAdminCount = 0;
+    //                 let currentEnableTopAdminCount = 0;
+
+    //                 for ( const data of resData ) { if ( data.level === 2 ) { currentTopAdminCount++ } }
+
+    //                 for ( const data of resData ) { if ( data.level === 2 && data.status === 1 ) { currentEnableTopAdminCount++ } }
+
+    //                 for( const data of resData ) {
+
+    //                     const deleteBtn = `
+    //                     <div 
+    //                         class="delete" 
+    //                         delete_target="${ viewTarget }" 
+    //                         delete_id="${ data.id }" 
+    //                         style="display:${(
+    //                             currentTopAdminCount > 1 &&
+    //                             data.level === 2 &&
+    //                             currentEnableTopAdminCount >= 1 &&
+    //                             data.status === 0 ) || (
+    //                             currentTopAdminCount > 1 &&
+    //                             data.level === 2 &&
+    //                             currentEnableTopAdminCount > 1 &&
+    //                             data.status === 1 ) ||
+    //                             data.level !== 2
+    //                             ? 'block' : 'none'
+    //                         }"
+    //                         title="刪除">
+    //                     </div>`;
+
+    //                     dataHTML += `
+    //                         <div class="item ${ data.status === 0 ? 'disable_item' : '' } ${ viewTarget === 'admin' && data.level === 2 ?  'freez' : '' }">
+    //                             ${ deleteBtn }
+    //                             <div class="id">${ data.id }</div>
+    //                             <div class="head_pic"></div>
+    //                             <div class="name">${ data.name }</div>
+    //                             <div class="account">${ data.account }</div>
+    //                             ${ viewTarget === 'admin' ? `<div class="level">${data.level}</div>` : '' }
+    //                             <div class="tel">${ data.tel }</div>
+    //                             <div class="status"><div class="switch"><div></div></div></div>
+    //                         </div>
+    //                     `;
+
+    //                 }
+
+    //                 if( viewTarget === 'admin' ) {
+
+    //                     dataHTML += `
+    //                         <form id="addItem" class="item addItem hideInput">
+    //                             <div class="addItemMes"></div>
+    //                             <div class="head_pic"></div>
+    //                             <input class="name" name="name" type="text" maxlength="12" placeholder="名字" autocomplete="off" required>
+    //                             <input class="account" name="account" type="text" maxlength="50" placeholder="帳號" autocomplete="off" required>
+    //                             <input class="password" name="password" type="password" maxlength="64" placeholder="密碼" autocomplete="off" required>
+    //                             <input class="number" type="tel" name="tel" maxlength="20" placeholder="電話" autocomplete="off" required>
+    //                             <input class="level" type="number" name="level" max="2" min="1" maxlength="1" placeholder="權限等級(0~2)" autocomplete="off" required>
+    //                             <div class="addAdminbuttons">
+    //                                 <button id="submitAddAdmin" type="submit" title="新增">新增<button>
+    //                                 <button id="cancelAddAdmin" type="reset" title="取消">取消<button>
+    //                             </div>
+    //                         </form>
+    //                     `
+
+    //                 }
+
+
+    //             }
+
+    //             else if( viewTarget === 'mes' ) {
+
+    //                 for( const data of resData ) {
+
+    //                     dataHTML += `
+    //                         <div class="item mesItem">
+    //                             <div class="delete" delete_target="${ viewTarget }" delete_id="${ data.id }" title="刪除"></div>
+    //                             <div class="id">${ data.id }</div>
+    //                             <div class="head_pic"></div>
+    //                             <div class="name">${ data.name }</div>
+    //                             <div class="mes_content">${ data.mes_content }</div>
+    //                         </div>
+    //                     `;
+
+
+    //                 }
+
+    //             }
+    //             document.querySelector('#manage_section > .item_warp').innerHTML = dataHTML;
+
+    //             document.querySelector('.manage_section_mes').textContent = '';
+
+    //             init();
+
+    //         }
+
+    //     }
+
+    //     else { console.log( '此參數不存在對應的資料' ); }
+
+    // })
+
+    // .catch( err => { console.log( err ); });
+}
+
+</script>
+</html>

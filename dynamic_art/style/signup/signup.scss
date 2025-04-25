@@ -1,0 +1,37 @@
+@import '../form';
+
+header {
+
+    h1 {
+        right: 15vw;
+        top: max(15vh, 20vw);
+        transform: translate(0, -50%);
+    }
+
+}
+
+main{
+    &.form_main {
+        section {
+            &.form_section {
+                form {
+                    left: 10vw;
+                    top: 55%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and ( max-width: 700px ) {
+
+    header {
+        h1 {
+            right: 0;
+            left: 50vw;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            &::before { bottom: 0; }
+        }
+    }
+}
