@@ -170,31 +170,31 @@ header .bannerPlayControllor button#DynamicGeomBg_stop::after {
 }
 
 main section#about_tools > div .icon_list > div:nth-child(1) {
-  background: center/50% no-repeat url("../../img/nodejs.svg");
+  background: center/50% no-repeat url("../../images/nodejs.svg");
 }
 main section#about_tools > div .icon_list > div:nth-child(2) {
-  background: center/50% no-repeat url("../../img/mysql.svg");
+  background: center/50% no-repeat url("../../images/mysql.svg");
 }
 main section#about_tools > div .icon_list > div:nth-child(3) {
-  background: center/50% no-repeat url("../../img/sass.svg");
+  background: center/50% no-repeat url("../../images/sass.svg");
 }
 main section#about_tools > div .icon_list > div:nth-child(4) {
-  background: center/50% no-repeat url("../../img/javascript.svg");
+  background: center/50% no-repeat url("../../images/javascript.svg");
 }
 main section#about_tools > div .icon_list > div:nth-child(5) {
-  background: center/50% no-repeat url("../../img/html.svg");
+  background: center/50% no-repeat url("../../images/html.svg");
 }
 main section#about_tools > div .icon_list > div:nth-child(6) {
-  background: center/50% no-repeat url("../../img/css.svg");
+  background: center/50% no-repeat url("../../images/css.svg");
 }
 main section#about_banner > div .icon_list > div:nth-child(1) {
-  background: center/50% no-repeat url("../../img/javascript.svg");
+  background: center/50% no-repeat url("../../images/javascript.svg");
 }
 main section#about_banner > div .icon_list > div:nth-child(2) {
-  background: center/50% no-repeat url("../../img/html.svg");
+  background: center/50% no-repeat url("../../images/html.svg");
 }
 main section#about_banner > div .icon_list > div:nth-child(3) {
-  background: center/50% no-repeat url("../../img/css.svg");
+  background: center/50% no-repeat url("../../images/css.svg");
 }
 main section#message_board {
   width: 90%;
@@ -279,7 +279,7 @@ main section#message_board > div .message_list .message_item .delete_btn {
   position: absolute;
   top: 1rem;
   right: 1.5rem;
-  background: url("../../img/delete.svg");
+  background: url("../../images/delete.svg");
   z-index: 1;
 }
 main section#reset_password {

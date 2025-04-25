@@ -470,32 +470,32 @@ footer .info > div.social_media > div a {
   margin: 1rem;
 }
 footer .info > div.social_media > div a:nth-child(1) {
-  background: url("../../img/footer_discord.svg") no-repeat;
+  background: url("../../images/footer_discord.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }
 footer .info > div.social_media > div a:nth-child(2) {
-  background: url("../../img/footer_instagram.svg") no-repeat;
+  background: url("../../images/footer_instagram.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }
 footer .info > div.social_media > div a:nth-child(3) {
-  background: url("../../img/footer_facebook.svg") no-repeat;
+  background: url("../../images/footer_facebook.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }
 footer .info > div.social_media > div a:nth-child(4) {
-  background: url("../../img/footer_line.svg") no-repeat;
+  background: url("../../images/footer_line.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }
 footer .info > div.social_media > div a:nth-child(5) {
-  background: url("../../img/footer_twitter.svg") no-repeat;
+  background: url("../../images/footer_twitter.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }
 footer .info > div.social_media > div a:nth-child(6) {
-  background: url("../../img/footer_youtube.svg") no-repeat;
+  background: url("../../images/footer_youtube.svg") no-repeat;
   background-size: 100%;
   background-position: center;
 }/*# sourceMappingURL=global.css.map */
